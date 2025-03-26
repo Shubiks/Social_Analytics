@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'youtube_analytics',
     'instagram_analytics',
+    'authapp'
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,26 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Google OAuth settings
+GOOGLE_CLIENT_SECRET_FILE = os.path.join(BASE_DIR, "/home/dell/SocialMedia/client_secret_430717678079-jrelpaqpvmgg94t017qr67jnpm82pg76.apps.googleusercontent.com (1).json")
+
+GOOGLE_SCOPES = [
+    "https://www.googleapis.com/auth/yt-analytics.readonly",
+    "https://www.googleapis.com/auth/youtube.readonly"
+]
+
+GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/auth/callback/"
+
+import os
+import oauthlib.oauth2
+
+if os.getenv('DJANGO_ENV') == 'development':
+    # Allow insecure transport for local development
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+

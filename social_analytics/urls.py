@@ -15,10 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+from django.http import JsonResponse
+
+# Default API/Homepage response
+def home_view(request):
+    return JsonResponse({"message": "Welcome to Social Analytics API"}, status=200)
 
 urlpatterns = [
+    path('', home_view, name='home'),  # Default route
     path('admin/', admin.site.urls),
     path('youtube/', include('youtube_analytics.urls')),
     path('instagram/', include('instagram_analytics.urls')),
+    path("auth/", include("authapp.urls")),
 ]
+
